@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block head %}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.css"/> 
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.js"></script>
+
+    <div class="jumbotron">
+        <div class="container">
+            <div class="display-1">CRIM visualisation testing</div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <table class="table table-striped">
+                <thead>
+                    <th>PK</th>
+                    <th>Piece ID</th>
+                    <th>Piece title</th>
+                    <th>Heatmaps</th>
+                </thead>
+                <tbody>
+                    {% for piece in piece_list %}
+                        <tr>
+                            <td>{{ piece.pk }}</td>
+                            <td>
+                                {{ piece.piece_id }}
+                            </td>
+                            <td>
+                                {{ piece.title }}
+                            </td>
+                            <td>
+                                <a href="{{ piece.get_absolute_url }}">Go to heatmap</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+    </div>
+{% endblock %}
+{% block scripts %}
+<script>
+$(document).ready(function() {
+    $('table').DataTable();
+} );
+</script>
+{% endblock %}
