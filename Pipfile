@@ -10,8 +10,9 @@ django = "*"
 python-decouple = "*"
 requests = "*"
 django-autocomplete-light = "*"
-pscycopg2 = "*"
-psycopg2 = "*"
+psycopg2-binary = "*"
+gunicorn = "*"
+django-heroku = "*"
 
 [requires]
 python_version = "3.7"
