@@ -1,1 +1,1 @@
-web: gunicorn CRIM_vis.wsgi
+web: gunicorn CRIM_vis.wsgi --log-file -
