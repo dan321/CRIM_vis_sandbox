@@ -4,11 +4,10 @@ let pieceID = container.getAttribute('data');
 let relationshipURL = `/pieces/${pieceID}/relationships/`
 let observationURL = `/pieces/${pieceID}/observations/`
 let pageTitle = document.querySelector("#page-title") 
-
 let heatmapType = heatmapSelect.options[heatmapSelect.selectedIndex].value;
 
 
-if (heatmapType === "relationships") {
+if (heatmapType === "relationships"){
     createRelationshipHeatmap();
 } else if (heatmapType === "observations") {
     createObservationHeatmap();

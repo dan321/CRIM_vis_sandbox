@@ -7,6 +7,10 @@ from dal import autocomplete
 
 
 # Create your views here.
+def index(request):
+    return render(request, 'index.html')
+
+
 def relationship_json_view(request, slug):
     json =  requests.get(f"https://crimproject.org/pieces/{slug}/relationships/?format=json").json()
 
