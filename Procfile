@@ -1,1 +1,1 @@
-web: gunicorn CRIM-vis.wsgi
+web: gunicorn CRIM_vis.wsgi
