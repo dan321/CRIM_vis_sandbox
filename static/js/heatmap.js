@@ -5,6 +5,7 @@ let relationshipURL = `/pieces/${pieceID}/relationships/`
 let observationURL = `/pieces/${pieceID}/observations/`
 let pageTitle = document.querySelector("#page-title") 
 let heatmapType = heatmapSelect.options[heatmapSelect.selectedIndex].value;
+let alert = document.querySelector('#alert')
 
 
 if (heatmapType === "relationships"){
@@ -16,6 +17,8 @@ if (heatmapType === "relationships"){
 heatmapSelect.addEventListener('change', function(){
     heatmapType = heatmapSelect.options[heatmapSelect.selectedIndex].value;
     container.innerHTML = ''
+    alert.innerHTML = ""
+    alert.className = ''
 
     if (heatmapType === "relationships") {
         createRelationshipHeatmap();
@@ -44,6 +47,13 @@ function createRelationshipHeatmap(){
         jsonModelDerivativeChoice = "relationships_as_model";
     } else if (pieceType === "Mass"){
         jsonModelDerivativeChoice = "relationships_as_derivative";
+    }
+
+
+    if (jsonData[jsonModelDerivativeChoice].length === 0) {
+        alert.innerHTML = "There are no relationships to show";
+        alert.className = "container alert alert-info"
+        return
     }
 
     // We need to group the relationships by observer
@@ -82,6 +92,12 @@ function createObservationHeatmap(){
     fetch(observationURL)
     .then(data => data.json())
     .then(jsonData => {
+
+    if (jsonData.observations.length === 0){
+        alert.innerHTML = "There are no observations to show";
+        alert.className = "container alert alert-info";
+        return
+    }
 
     // We need to group the relationships by observer
     let groupedChartData = _(jsonData.observations).groupBy(observation => {

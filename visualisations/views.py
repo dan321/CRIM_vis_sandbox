@@ -24,8 +24,9 @@ def observation_json_view(request, slug):
 
 def network_data_view(request):
     
-    # Create edges
 
+
+    # Create edges
     edges_dicts = []
     edges = pd.read_csv('static/data/relationship_edges_without_duplicates.csv')
     for edge in edges.itertuples():
@@ -33,7 +34,9 @@ def network_data_view(request):
             {
                 'from': edge.Source,
                 'to': edge.Target,
-                'label': '' #edge.Label
+                'arrows': 'to',
+                'label': '', #edge.Label,
+                'title': edge.Label
             }
         )
 
@@ -43,11 +46,19 @@ def network_data_view(request):
 
     node_dicts = []
     for node in nodes.itertuples():
+        try:
+            piece = Piece.objects.get(piece_id=node.Label)
+            title = f"{piece.title} ({piece.genre})"
+
+        except Exception as e:
+            title = ''
+
         node_dicts.append(
             {
                 'id': node.Id,
                 'label': node.Label,
-                'group': node.Group
+                'group': node.Group,
+                'title': title
             }
         )
 

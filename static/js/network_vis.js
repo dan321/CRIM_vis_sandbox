@@ -10,13 +10,15 @@ fetch('pieces/network-data').then(data => data.json())
       };
       var options = {
         height: "100%",
-        label: undefined,
-        arrows:  {
-            to: {enabled: true, scaleFactor:10, type:'arrow'}
-        }
       }
   
       // initialize your network!
       var network = new vis.Network(container, data, options);
 
+      network.on("doubleClick", function(properties) {
+        if(!properties.nodes.length) return;
+        
+        window.open(`pieces/${properties.nodes[0]}`, '_blank')
+      
+      })
 })
