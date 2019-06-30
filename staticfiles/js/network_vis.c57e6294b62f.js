@@ -1,1 +1,0 @@
-fetch('pieces/network-data').then(data => console.log(data));
