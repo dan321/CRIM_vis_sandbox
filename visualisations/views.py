@@ -6,6 +6,7 @@ import requests
 from dal import autocomplete
 from django.templatetags.static import static
 import pandas as pd
+from django.templatetags.static import static
 
 
 # Create your views here.
@@ -24,11 +25,17 @@ def observation_json_view(request, slug):
 
 def network_data_view(request):
     
-
+    try:
+        edges_df = pd.read_csv(static('data/relationship_edges_without_duplicates.csv'))
+        nodes_df = static('data/relationship_node_list.csv')
+    except Exception as e:
+        edges_df = pd.read_csv('static/data/relationship_edges_without_duplicates.csv')
+        nodes_df = pd.read_csv('static/data/relationship_node_list.csv')
+    
 
     # Create edges
     edges_dicts = []
-    edges = pd.read_csv('static/data/relationship_edges_without_duplicates.csv')
+    edges = edges_df
     for edge in edges.itertuples():
         edges_dicts.append(
             {
@@ -42,7 +49,7 @@ def network_data_view(request):
 
     
     # Create nodes
-    nodes = pd.read_csv('static/data/relationship_node_list.csv')
+    nodes = nodes_df
 
     node_dicts = []
     for node in nodes.itertuples():
