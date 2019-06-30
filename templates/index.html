@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block head %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.css">
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
 <div class="jumbotron">
     <div class="container">
         <h1 class="display-2">
@@ -12,13 +14,14 @@
             More here soon… For now go to the <a href="{% url 'piece-list' %}">list of models and masses to explore the visualisations</a>
         </p>
     </div>
-
-    <div id="network">
-        
-    </div>
 </div>
 {% endblock %}
 
 {% block body %}
+<div id="network" class="full-height"></div>
+{% endblock %}
 
+
+{% block scripts %}
+    <script src="{% static 'js/network_vis.js' %}"></script>
 {% endblock %}
