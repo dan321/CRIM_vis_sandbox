@@ -1,8 +1,8 @@
 let container = document.querySelector("#heatmap");
 let heatmapSelect = document.querySelector('#heatmap-select')
 let pieceID = container.getAttribute('data');
-let relationshipURL = `/pieces/${pieceID}/relationships/`
-let observationURL = `/pieces/${pieceID}/observations/`
+let relationshipURL = `https://crimproject.org/pieces/${pieceID}/relationships/?format=json`
+let observationURL = `https://crimproject.org/pieces/${pieceID}/observations/?format=json`
 let pageTitle = document.querySelector("#page-title") 
 let heatmapType = heatmapSelect.options[heatmapSelect.selectedIndex].value;
 let alert = document.querySelector('#alert')
@@ -31,7 +31,6 @@ function createRelationshipHeatmap(){
     fetch(relationshipURL)
     .then(data => data.json())
     .then(jsonData => {
-
 
     // Get piece type. This is important because heatmaps for Masses and Models
     // will differ in what they show.
