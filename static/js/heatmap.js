@@ -71,8 +71,7 @@ function createRelationshipHeatmap(){
     };
 
     
-    container.innerHTML = ""
-    loader.className = "d-none"
+    containerLoaderCleanup()
        
     // Plot heatmap
     TimelinesChart()(container)
@@ -116,9 +115,7 @@ function createObservationHeatmap(){
         combinedHeatmapData.push(personData);
     };  
     
-    container.innerHTML = ""
-    loader.className = "d-none"
-
+    containerLoaderCleanup()
         
     // Plot heatmap
     TimelinesChart()(container)
@@ -246,4 +243,10 @@ function getPieceTypeFromID(pieceID){
     } else {
         "Other"
     }
+}
+
+
+function containerLoaderCleanup() {
+    container.innerHTML = ""
+    loader.className = "d-none"
 }
