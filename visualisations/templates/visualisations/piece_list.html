@@ -31,7 +31,11 @@
                                 {{ piece.title }}
                             </td>
                             <td>
-                                <a href="{{ piece.get_absolute_url }}">Go to heatmap</a>
+                                <ul>
+                                    <li><a href="{{ piece.get_absolute_url }}">Go to heatmap with dropdown</a></li>
+                                    <li><a href="{% url 'observations-heatmap' slug=piece.piece_id %}">Go to observations heatmap</a></li>
+                                    <li><a href="{% url 'relationships-heatmap' slug=piece.piece_id %}">Go to relationships heatmap</a></li>
+                                </ul>
                             </td>
                         </tr>
                     {% endfor %}

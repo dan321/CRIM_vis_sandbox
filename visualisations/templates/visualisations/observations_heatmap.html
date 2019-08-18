@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1 id="page-title" class="mb-3">Observations heatmap for <em>{{ piece.title }}</em> ({{ piece.piece_id }})</h1>
+    </div>
+
+    <div id="alert"></div>
+    <img id="loader" src="{% static 'img/ajax-loader.gif' %}" class="mx-auto d-block mt-5">
+    <div id="heatmap" data-id={{piece}} data-type="observations"></div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
+    <script src="{% static 'js/timelines-chart.min.js' %}"></script>
+    <script src="{% static 'js/heatmap.js' %}"></script>
+{% endblock %}

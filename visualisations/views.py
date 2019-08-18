@@ -80,6 +80,18 @@ class PieceDetailView(DetailView):
     slug_field = "piece_id"
 
 
+class PieceRelationshipsView(DetailView):
+    model = Piece
+    slug_field = "piece_id"
+    template_name = "visualisations/relationships_heatmap.html"
+
+
+class PieceObservationsView(DetailView):
+    model = Piece
+    slug_field = "piece_id"
+    template_name = "visualisations/observations_heatmap.html"
+
+
 
 class PieceListView(ListView):
     model = Piece
