@@ -1,10 +1,10 @@
 let container = document.querySelector("#heatmap");
 let pieceID = container.dataset.id;
-let relationshipURL = `https://crimproject.org/pieces/${pieceID}/relationships/?format=json`
-let observationURL = `https://crimproject.org/pieces/${pieceID}/observations/?format=json`
-let heatmapType = container.dataset.type
-let alert = document.querySelector("#alert")
-let loader = document.querySelector("#loader")
+let relationshipURL = `https://crimproject.org/pieces/${pieceID}/relationships/?format=json`;
+let observationURL = `https://crimproject.org/pieces/${pieceID}/observations/?format=json`;
+let heatmapType = container.dataset.type;
+let alert = document.querySelector("#alert");
+let loader = document.querySelector("#loader");
 
 
 // Generate correct heatmap type on initial load
@@ -40,7 +40,7 @@ function createRelationshipHeatmap() {
 
 
             if (jsonData[jsonModelDerivativeChoice].length === 0) {
-                showAlert("There are no relationships to show")
+                showAlert("There are no relationships to show");
                 return
             }
 
@@ -55,10 +55,10 @@ function createRelationshipHeatmap() {
             for (var person in groupedChartData) {
                 let personData = getPersonRelationshipData(person, groupedChartData[person], pieceType);
                 combinedHeatmapData.push(personData);
-            };
+            }
 
             // Hide loader
-            loader.className = "d-none"
+            loader.className = "d-none";
 
             // Plot heatmap
             TimelinesChart()(container)
@@ -85,7 +85,7 @@ function createObservationHeatmap() {
 
 
             if (jsonData.observations.length === 0) {
-                showAlert("There are no observations to show")
+                showAlert("There are no observations to show");
                 return
             }
 
@@ -99,10 +99,10 @@ function createObservationHeatmap() {
             for (var person in groupedChartData) {
                 let personData = getPersonObservationData(person, groupedChartData[person]);
                 combinedHeatmapData.push(personData);
-            };
+            }
 
             // Hide loader
-            loader.className = "d-none"
+            loader.className = "d-none";
 
             // Plot heatmap
             TimelinesChart()(container)
@@ -135,7 +135,7 @@ function extractMeasureRangeFromEma(ema) {
             return [
                 rangePair[0],
                 rangePair[0]
-            ];
+            ]
 
         } else if (rangePair.length === 2) {
             return rangePair;
@@ -143,7 +143,7 @@ function extractMeasureRangeFromEma(ema) {
     } // end emaRanges.map
     );
     return emaRangePairs;
-};
+}
 
 // Get relationship data for an individual observer
 function getPersonRelationshipData(person, personRelationshipArray, pieceType) {
@@ -157,7 +157,7 @@ function getPersonRelationshipData(person, personRelationshipArray, pieceType) {
     }
 
     // Create an array of heatmap data for a specific observer
-    var personHeatmapData = []
+    var personHeatmapData = [];
 
     personRelationshipArray.forEach(relationship => {
 
@@ -165,7 +165,7 @@ function getPersonRelationshipData(person, personRelationshipArray, pieceType) {
         let measureRanges = extractMeasureRangeFromEma(relationship[jsonPart].ema);
 
         let relationshipType = `${relationship.relationship_type}`;
-        let additionalTypeInformation = `: ${relationship.model_observation.piece.piece_id} → ${relationship.derivative_observation.piece.piece_id}`
+        let additionalTypeInformation = `: ${relationship.model_observation.piece.piece_id} → ${relationship.derivative_observation.piece.piece_id}`;
         // relationshipType = relationshipType + additionalTypeInformation;
 
 
@@ -181,7 +181,7 @@ function getPersonRelationshipData(person, personRelationshipArray, pieceType) {
                 label: relationshipID,
                 data: rangeData,
             })
-    }) // end forEach
+    }); // end forEach
 
     return {
         group: person,
@@ -192,7 +192,7 @@ function getPersonRelationshipData(person, personRelationshipArray, pieceType) {
 function getPersonObservationData(person, personObservationArray) {
 
     // Create an array of heatmap data for a specific observer
-    var personHeatmapData = []
+    var personHeatmapData = [];
 
     personObservationArray.forEach(observation => {
 
@@ -212,7 +212,7 @@ function getPersonObservationData(person, personObservationArray) {
                 label: observationID,
                 data: rangeData,
             })
-    }) // end forEach
+    }); // end forEach
 
     return {
         group: person,
@@ -226,15 +226,15 @@ function getPieceTypeFromID(pieceID) {
     if (pieceID.includes("Mass")) {
         return "Mass"
     } else if (pieceID.includes("Model")) {
-        return "Model"
+        return "Model";
     } else {
-        "Other"
+        return "Other";
     }
 }
 
 
 function showAlert(alertText) {
-    loader.className = "d-none"
+    loader.className = "d-none";
     alert.innerHTML = alertText;
-    alert.className = "container alert alert-info"
+    alert.className = "container alert alert-info";
 }

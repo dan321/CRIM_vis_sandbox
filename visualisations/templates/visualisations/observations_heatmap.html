@@ -4,7 +4,9 @@
 {% block body %}
     <div class="container mt-5">
         <h1 id="page-title" class="mb-3">Observations heatmap for <em>{{ piece.title }}</em> ({{ piece.piece_id }})</h1>
-        <div class="mb-3"><a href="{% url 'relationships-heatmap' slug=piece.piece_id %}" class="mb-5">Go to Relationships heatmap</a></div>
+        <div class="mb-3">
+            <a href="{% url 'relationships-heatmap' slug=piece.piece_id %}" class="mb-5">Go to Relationships heatmap</a>
+        </div>
     </div>
 
     <div id="alert"></div>
