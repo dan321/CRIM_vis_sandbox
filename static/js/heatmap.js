@@ -17,9 +17,8 @@ if (heatmapType === "relationships"){
 
 heatmapSelect.addEventListener('change', function(){
     heatmapType = heatmapSelect.options[heatmapSelect.selectedIndex].value;
-    container.innerHTML = ''
     alert.innerHTML = ""
-    alert.className = ''
+    alert.className = ""
 
     if (heatmapType === "relationships") {
         createRelationshipHeatmap();
@@ -69,7 +68,8 @@ function createRelationshipHeatmap(){
         combinedHeatmapData.push(personData);
     };
 
-        
+    container.innerHTML = ''
+       
     // Plot heatmap
     TimelinesChart()(container)
                 .data(combinedHeatmapData)
@@ -109,7 +109,9 @@ function createObservationHeatmap(){
     for (var person in groupedChartData){
         let personData = getPersonObservationData(person, groupedChartData[person]);
         combinedHeatmapData.push(personData);
-    };    
+    };  
+    
+    container.innerHTML = ''
         
     // Plot heatmap
     TimelinesChart()(container)
