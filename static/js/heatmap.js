@@ -5,9 +5,9 @@ let relationshipURL = `https://crimproject.org/pieces/${pieceID}/relationships/?
 let observationURL = `https://crimproject.org/pieces/${pieceID}/observations/?format=json`
 let pageTitle = document.querySelector("#page-title") 
 let heatmapType = heatmapSelect.options[heatmapSelect.selectedIndex].value;
-let alert = document.querySelector('#alert')
+let alert = document.querySelector("#alert")
+let loader = document.querySelector("#loader")
 
-console.log(pieceID)
 
 if (heatmapType === "relationships"){
     createRelationshipHeatmap();
@@ -19,7 +19,8 @@ heatmapSelect.addEventListener('change', function(){
     heatmapType = heatmapSelect.options[heatmapSelect.selectedIndex].value;
     alert.innerHTML = ""
     alert.className = ""
-
+    loader.className = "mx-auto d-block mb-4"
+    
     if (heatmapType === "relationships") {
         createRelationshipHeatmap();
     } else if (heatmapType === "observations") {
@@ -31,6 +32,7 @@ function createRelationshipHeatmap(){
     fetch(relationshipURL)
     .then(data => data.json())
     .then(jsonData => {
+    
 
     // Get piece type. This is important because heatmaps for Masses and Models
     // will differ in what they show.
@@ -39,7 +41,7 @@ function createRelationshipHeatmap(){
 
     let pieceType = getPieceTypeFromID(pieceID);
     let jsonModelDerivativeChoice;
-
+    
 
     
     if (pieceType === "Model"){
@@ -68,7 +70,9 @@ function createRelationshipHeatmap(){
         combinedHeatmapData.push(personData);
     };
 
-    container.innerHTML = ''
+    
+    container.innerHTML = ""
+    loader.className = "d-none"
        
     // Plot heatmap
     TimelinesChart()(container)
@@ -92,6 +96,7 @@ function createObservationHeatmap(){
     fetch(observationURL)
     .then(data => data.json())
     .then(jsonData => {
+    
 
     if (jsonData.observations.length === 0){
         alert.innerHTML = "There are no observations to show";
@@ -111,7 +116,9 @@ function createObservationHeatmap(){
         combinedHeatmapData.push(personData);
     };  
     
-    container.innerHTML = ''
+    container.innerHTML = ""
+    loader.className = "d-none"
+
         
     // Plot heatmap
     TimelinesChart()(container)
