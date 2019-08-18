@@ -7,6 +7,7 @@ let pageTitle = document.querySelector("#page-title")
 let heatmapType = heatmapSelect.options[heatmapSelect.selectedIndex].value;
 let alert = document.querySelector('#alert')
 
+console.log(pieceID)
 
 if (heatmapType === "relationships"){
     createRelationshipHeatmap();
