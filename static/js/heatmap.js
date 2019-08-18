@@ -113,7 +113,7 @@ function createObservationHeatmap() {
                 .leftMargin(180)
                 .onSegmentClick(d => {
                     window.location = `https://crimproject.org/observations/${d.label}/`
-                })
+                }) // end Timelines Chart
         }
         );
 }
