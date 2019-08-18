@@ -18,7 +18,7 @@ fetch('pieces/network-data').then(data => data.json())
       network.on("doubleClick", function(properties) {
         if(!properties.nodes.length) return;
         
-        window.open(`pieces/${properties.nodes[0]}`, '_blank')
+        window.open(`http://crim-vis.herokuapp.com/pieces/${properties.nodes[0]}/observations-heatmap/`, '_blank')
       
       })
 })

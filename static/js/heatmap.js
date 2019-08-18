@@ -2,19 +2,10 @@ let container = document.querySelector("#heatmap");
 let pieceID = container.dataset.id;
 let relationshipURL = `https://crimproject.org/pieces/${pieceID}/relationships/?format=json`
 let observationURL = `https://crimproject.org/pieces/${pieceID}/observations/?format=json`
-let pageTitle = document.querySelector("#page-title")
-let heatmapType
-let heatmapSelect = document.querySelector('#heatmap-select')
+let heatmapType = container.dataset.type
 let alert = document.querySelector("#alert")
 let loader = document.querySelector("#loader")
 
-
-// Where possible get the chart type from the container
-if (container.dataset.type) {
-    heatmapType = container.dataset.type
-} else {
-    heatmapType = heatmapSelect.options[heatmapSelect.selectedIndex].value;
-}
 
 // Generate correct heatmap type on initial load
 if (heatmapType === "relationships") {
@@ -23,22 +14,6 @@ if (heatmapType === "relationships") {
     createObservationHeatmap();
 }
 
-
-// If there is a dropdown, add a listener to it
-if (heatmapSelect !== null) {
-    document.querySelector('#heatmap-select').addEventListener('change', function () {
-        heatmapType = getHeatmapType();
-        alert.innerHTML = "";
-        alert.className = "";
-        loader.className = "mx-auto d-block mb-4";
-
-        if (heatmapType === "relationships") {
-            createRelationshipHeatmap();
-        } else if (heatmapType === "observations") {
-            createObservationHeatmap();
-        }
-    })
-}
 
 
 function createRelationshipHeatmap() {
@@ -82,8 +57,7 @@ function createRelationshipHeatmap() {
                 combinedHeatmapData.push(personData);
             };
 
-
-            container.innerHTML = ""
+            // Hide loader
             loader.className = "d-none"
 
             // Plot heatmap
@@ -127,9 +101,8 @@ function createObservationHeatmap() {
                 combinedHeatmapData.push(personData);
             };
 
-            container.innerHTML = ""
+            // Hide loader
             loader.className = "d-none"
-
 
             // Plot heatmap
             TimelinesChart()(container)
