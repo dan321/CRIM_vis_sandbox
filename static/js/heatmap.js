@@ -68,7 +68,7 @@ function createRelationshipHeatmap() {
                 .zQualitative(true)
                 .leftMargin(180)
                 .onSegmentClick(d => {
-                    window.location = `https://crimproject.org/relationships/${d.label}/`
+                    window.open(`https://crimproject.org/relationships/${d.label}/`, '_blank');
                 }) // end Timelines Chart
         }
         );
@@ -112,7 +112,7 @@ function createObservationHeatmap() {
                 .zQualitative(true)
                 .leftMargin(180)
                 .onSegmentClick(d => {
-                    window.location = `https://crimproject.org/observations/${d.label}/`
+                    window.open(`https://crimproject.org/observations/${d.label}/`, '_blank');
                 }) // end Timelines Chart
         }
         );
