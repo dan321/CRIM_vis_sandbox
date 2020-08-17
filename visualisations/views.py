@@ -86,12 +86,14 @@ def auto_heatmap_json(request, slug, vector_size):
 
         context = {
             "heatmap_data": heatmap_data,
-            "piece_id": slug
+            "piece_id": slug,
+            "vector_size": vector_size
         }
     except Exception as e:
         context = {
             "heatmap_data": {},
-            "piece_id": slug
+            "piece_id": slug,
+            "vector_size": "?"
         }
     return render(request, 'visualisations/auto_heatmap.html', context=context)
 

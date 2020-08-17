@@ -34,6 +34,7 @@
                                 <ul>
                                     <li><a href="{% url 'observations-heatmap' slug=piece.piece_id %}">Go to observations heatmap</a></li>
                                     <li><a href="{% url 'relationships-heatmap' slug=piece.piece_id %}">Go to relationships heatmap</a></li>
+                                    <li><a href="{% url 'auto-heatmap' slug=piece.piece_id vector_size=5 %}">Go to auto heatmap</a></li>
                                 </ul>
                             </td>
                         </tr>
