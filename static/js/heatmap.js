@@ -60,6 +60,8 @@ function createRelationshipHeatmap() {
             // Hide loader
             loader.className = "d-none";
 
+            console.log(JSON.stringify(combinedHeatmapData));
+
             // Plot heatmap
             TimelinesChart()(container)
                 .data(combinedHeatmapData)

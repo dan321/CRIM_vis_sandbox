@@ -7,11 +7,89 @@ from dal import autocomplete
 from django.templatetags.static import static
 import pandas as pd
 from django.templatetags.static import static
+import crim_intervals as ci
+import pandas as pd
+
+# Utility functions
+def get_match_data_for_piece(piece_id, vector_size=5, min_matches=2):
+    
+    url = f"https://crimproject.org/mei/{piece_id}.mei"
+    score = ci.ScoreBase(url)
+    vectors = ci.IntervalBase(score.note_list)
+    patterns = ci.into_patterns([vectors.generic_intervals], vector_size)
+    exact_matches = ci.find_exact_matches(patterns, min_matches)
+
+    match_data = []
+    
+    for match_series in exact_matches:
+        for match in match_series.matches:
+            match_dict = {
+              "pattern_generating_match": match_series.pattern,
+              "pattern_matched": match.pattern, 
+              "piece_title": match.first_note.metadata.title, 
+              "part": match.first_note.part, 
+              "start_measure": match.first_note.note.measureNumber, 
+              "end_measure": match.last_note.note.measureNumber, 
+              "note_durations": match.durations, 
+              "ema": match.ema, 
+              "ema_url": match.ema_url
+            }
+
+            match_data.append(match_dict)
+
+    return pd.DataFrame(match_data)
 
 
-# Create your views here.
+def get_heatmap_data_from_df(df):
+
+    heatmap_data = []
+
+    for name, group in df.groupby("part"):
+
+        matches = []
+
+        for i, row in enumerate(group.sort_values(["start_measure"]).itertuples()):
+
+            inner_dict = {
+                "label": i,
+                "data": [
+                    {
+                        "timeRange": [row.start_measure, row.end_measure],
+                        "val": str(row.pattern_matched),
+                        "url": row.ema_url
+                    }
+                ]
+            } 
+
+            matches.append(inner_dict)
+
+
+        heatmap_data.append(
+            {
+                "group": name,
+                "data": matches
+            }
+        )
+
+    return heatmap_data
+
+
+# VIEWS
 def index(request):
     return render(request, 'index.html')
+
+def auto_heatmap_json(request, slug):
+    df = get_match_data_for_piece(slug)
+    heatmap_data = get_heatmap_data_from_df(df)
+
+    context = {
+        "heatmap_data": heatmap_data,
+        "piece_id": slug
+    }
+
+    return render(request, 'visualisations/auto_heatmap.html', context=context)
+
+
 
 def relationship_json_view(request, slug):
     json =  requests.get(f"https://crimproject.org/pieces/{slug}/relationships/?format=json").json()
@@ -21,6 +99,8 @@ def relationship_json_view(request, slug):
 def observation_json_view(request, slug):
     json =  requests.get(f"https://crimproject.org/pieces/{slug}/observations/?format=json").json()
     return JsonResponse(json)
+
+
 
 
 def network_data_view(request):
