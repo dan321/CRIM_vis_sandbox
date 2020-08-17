@@ -78,15 +78,21 @@ def get_heatmap_data_from_df(df):
 def index(request):
     return render(request, 'index.html')
 
-def auto_heatmap_json(request, slug):
-    df = get_match_data_for_piece(slug)
-    heatmap_data = get_heatmap_data_from_df(df)
+def auto_heatmap_json(request, slug, vector_size):
+    
+    try:
+        df = get_match_data_for_piece(slug, vector_size)
+        heatmap_data = get_heatmap_data_from_df(df)
 
-    context = {
-        "heatmap_data": heatmap_data,
-        "piece_id": slug
-    }
-
+        context = {
+            "heatmap_data": heatmap_data,
+            "piece_id": slug
+        }
+    except Exception as e:
+        context = {
+            "heatmap_data": {},
+            "piece_id": slug
+        }
     return render(request, 'visualisations/auto_heatmap.html', context=context)
 
 
