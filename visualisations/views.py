@@ -51,12 +51,12 @@ def get_heatmap_data_from_df(df):
         for i, row in enumerate(group.sort_values(["start_measure"]).itertuples()):
 
             inner_dict = {
-                "label": i,
+                "label": row.ema_url,
+                # "url": row.ema_url,
                 "data": [
                     {
                         "timeRange": [row.start_measure, row.end_measure],
                         "val": str(row.pattern_matched),
-                        "url": row.ema_url
                     }
                 ]
             } 

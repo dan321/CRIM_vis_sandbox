@@ -13,5 +13,6 @@ TimelinesChart()(container)
                 .zQualitative(true)
                 .leftMargin(180)
                 .onSegmentClick(d => {
-                    window.open(d.data.url);
+                    console.log(d);
+                    window.open(encodeURI(d.label), '_blank');
                 })
